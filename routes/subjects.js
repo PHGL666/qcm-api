@@ -7,9 +7,19 @@ router.get('/', function (req, res, next) {
     db.collection('subjects').find().toArray((err, subjects) => res.json(subjects));
 });
 
-/* GET /subjects/:id */
+/* GET theme/id */
+router.get('/:id', function (req, res) {
+    const { db } = req.app.locals;
+    const { id } = req.params;
+    db.collection('themes').findOne({ _id: new ObjectID(id) }, (err, theme) => res.json(theme));
+});
 
 /* PUT /subjects/:id */
+router.put('/:id', function (req, res, next) {
+    const { db } = req.app.locals;
+    const { id } = req.params;
+    db.collection('subjects').updateOne({ _id: new ObjectID(id) }, (err, response) => res.json(response));
+});
 
 
 module.exports = router;
